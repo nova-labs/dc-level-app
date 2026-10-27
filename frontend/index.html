@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, initial-scale=1.0">
+    <title>Dust Collection - Public Display</title>
+    <link rel="stylesheet" href="css/styles.css?v=0.2.1">
+</head>
+<body>
+    <div class="kiosk-container">
+        <!-- Header -->
+        <header class="kiosk-header">
+            <h1>Dust Collection Monitor</h1>
+            <div class="status-indicator">
+                <span class="connection-status" id="connectionStatus">
+                    <span class="status-dot"></span>
+                    <span id="statusText">Connecting...</span>
+                </span>
+                <span class="last-update" id="lastUpdateTime">--</span>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <div class="kiosk-main">
+            <!-- Vertical Level Bar -->
+            <section class="level-container">
+                <h2 class="panel-title">Fill Level</h2>
+                <div class="level-gauge">
+                    <div class="level-scale left">
+                        <span style="bottom: 100%">100%</span>
+                        <span style="bottom: 75%">75%</span>
+                        <span style="bottom: 50%">50%</span>
+                        <span style="bottom: 25%">25%</span>
+                        <span style="bottom: 0%">0%</span>
+                    </div>
+                    <div class="level-track">
+                        <div class="level-fill" id="levelFill"></div>
+                        <div class="level-tick" style="bottom: 25%"></div>
+                        <div class="level-tick" style="bottom: 50%"></div>
+                        <div class="level-tick" style="bottom: 75%"></div>
+                        <div class="level-threshold warning" id="warningLine"></div>
+                        <div class="level-threshold critical" id="criticalLine"></div>
+                    </div>
+                    <div class="level-scale right" id="volumeScale">
+                        <!-- yd³ labels are added from APP_CONFIG.bagCapacityYd3 -->
+                    </div>
+                </div>
+                <div class="level-readout">
+                    <div class="level-percent" id="levelPercent">--%</div>
+                    <div class="level-volume" id="levelVolume">-- yd³</div>
+                </div>
+            </section>
+
+            <!-- Collection Bag -->
+            <section class="bag-container">
+                <h2 class="panel-title">Collection Bag <span class="panel-subtitle" id="bagSubtitle">1 yd³ bulk bag</span></h2>
+                <div class="bag-canvas">
+                    <!-- Bag is drawn by js/bag.js -->
+                    <svg id="bagSvg" viewBox="40 50 700 690" preserveAspectRatio="xMidYMid meet"></svg>
+                </div>
+                <div class="bag-caption" id="bagCaption">Waiting for gauge...</div>
+            </section>
+
+            <!-- Sidebar Info Panel -->
+            <aside class="info-panel">
+                <!-- Bag Status -->
+                <div class="panel-section">
+                    <h3>Bag Status</h3>
+                    <div class="system-status">
+                        <div class="status-item">
+                            <span class="label">Status:</span>
+                            <span class="value status-badge" id="overallStatus">--</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="label">Fill Level:</span>
+                            <span class="value" id="fillValue">--</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="label">Sawdust:</span>
+                            <span class="value" id="volumeValue">--</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="label">Room Left:</span>
+                            <span class="value" id="roomValue">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gauge -->
+                <div class="panel-section">
+                    <h3>Level Gauge</h3>
+                    <div class="system-status">
+                        <div class="status-item">
+                            <span class="label">Signal:</span>
+                            <span class="value" id="signalValue">--</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="label">Raw Value:</span>
+                            <span class="value" id="rawValue">--</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="label">Last Reading:</span>
+                            <span class="value" id="readingTime">--</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="label">Source:</span>
+                            <span class="value small">192.168.1.181 · IR 300101</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Legend -->
+                <div class="panel-section">
+                    <h3>Legend</h3>
+                    <div class="legend">
+                        <div class="legend-item">
+                            <span class="legend-icon normal"></span>
+                            <span id="legendNormal"></span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-icon warning"></span>
+                            <span id="legendWarning"></span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-icon critical"></span>
+                            <span id="legendCritical"></span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-icon offline"></span>
+                            <span>Gauge offline or faulted</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Footer -->
+        <footer class="kiosk-footer">
+            <p>DC Level App v0.2.1 | Gauge read once per minute over Modbus/TCP</p>
+        </footer>
+    </div>
+
+    <script src="js/bag.js?v=0.2.1"></script>
+    <script src="js/app.js?v=0.2.1"></script>
+</body>
+</html>
